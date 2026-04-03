@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Analítico - Análise de Vendas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --highlight-green: #2ecc71;
+            --highlight-red: #e74c3c;
+            --primary-blue: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--primary-blue);
+            margin-bottom: 5px;
+        }
+
+        .intro {
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            text-align: center;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .card-full {
+            grid-column: 1 / -1;
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .insights {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .insights h4 {
+            margin: 10px 0 5px 0;
+            color: var(--primary-blue);
+        }
+
+        .insights ul {
+            padding-left: 20px;
+            margin: 0;
+            color: var(--text-muted);
+        }
+
+        .conclusion {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .conclusion h2 {
+            margin-top: 0;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📊 Dashboard Analítico: Análise de Vendas</h1>
+    </header>
+
+    <div class="intro">
+        <p>Este painel apresenta uma visão executiva do desempenho de vendas. A análise avalia faturamento por categoria, comportamento de compra por faixa etária e a sazonalidade da receita ao longo do ano. O objetivo é diagnosticar o cenário atual e fornecer recomendações práticas para a tomada de decisão estratégica.</p>
+    </div>
+
+    <div class="dashboard-grid">
+        
+        <div class="card">
+            <h2>Categoria com mais vendas</h2>
+            <div class="chart-container">
+                <canvas id="chartCategorias"></canvas>
+            </div>
+            <div class="insights">
+                <h4>💡 Interpretação</h4>
+                <ul>
+                    <li>Liderança estreita de Electronics, demonstrando portfólio saudável e equilibrado.</li>
+                    <li>Menor dependência de um único nicho mitiga riscos de receita.</li>
+                </ul>
+                <h4>🚀 Ação Prática</h4>
+                <ul>
+                    <li>Campanhas de Cross-Selling: "Compre eletrônicos e ganhe % off em vestuário".</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Faixa etária de compra (Top 10)</h2>
+            <div class="chart-container">
+                <canvas id="chartIdade"></canvas>
+            </div>
+            <div class="insights">
+                <h4>💡 Interpretação</h4>
+                <ul>
+                    <li>O cliente ideal (maior LTV) está na faixa dos 40+ anos (pico aos 43).</li>
+                    <li>Dificuldade de penetração e retenção no público de 30 a 39 anos.</li>
+                </ul>
+                <h4>🚀 Ação Prática</h4>
+                <ul>
+                    <li>Ajustar o tom do marketing focando em qualidade e confiabilidade para o público 40+.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-full">
+            <h2>Meses de Maior vs Menor Faturamento</h2>
+            <div class="chart-container">
+                <canvas id="chartMeses"></canvas>
+            </div>
+            <div class="insights">
+                <h4>💡 Interpretação</h4>
+                <ul>
+                    <li>Sazonalidade extrema: Pico histórico em Maio (Dia das Mães) e queda brusca em Setembro (espera pela Black Friday).</li>
+                </ul>
+                <h4>🚀 Ação Prática</h4>
+                <ul>
+                    <li>Criar eventos promocionais próprios em Setembro (ex: Semana do Cliente) para estabilizar o fluxo de caixa.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="conclusion">
+        <h2>🎯 Conclusão Geral</h2>
+        <p>A operação comercial é sólida, com um mix de produtos bem distribuído entre <strong>Eletrônicos, Vestuário e Beleza</strong>. O motor de crescimento está ancorado no público maduro (40+ anos), que deve receber atenção prioritária em retenção.</p>
+        <p>O maior ponto de alerta para a gestão é a <strong>volatilidade mensal</strong>. É crucial aproveitar a inércia de eventos como Maio, mas estruturar um calendário promocional agressivo para cobrir o "vale" financeiro de Setembro. Estratégias de venda cruzada e fidelização contínua serão fundamentais para estabilizar a receita anual.</p>
+    </div>
+
+    <script>
+        // Configuração global de fontes
+        Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+
+        // 1. Gráfico de Categorias
+        const ctxCategorias = document.getElementById('chartCategorias').getContext('2d');
+        new Chart(ctxCategorias, {
+            type: 'bar',
+            data: {
+                labels: ['Electronics', 'Clothing', 'Beauty'],
+                datasets: [{
+                    label: 'Faturamento (R$)',
+                    data: [158005, 155500, 143515],
+                    backgroundColor: ['#2ecc71', '#2c3e50', '#e74c3c'],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // 2. Gráfico de Idades
+        const ctxIdade = document.getElementById('chartIdade').getContext('2d');
+        new Chart(ctxIdade, {
+            type: 'bar',
+            data: {
+                labels: ['43', '41', '34', '32', '28', '22', '48', '31', '47', '37'],
+                datasets: [{
+                    label: 'Faturamento (R$)',
+                    data: [17870, 16005, 15785, 14870, 13980, 13700, 13000, 12585, 12500, 11650],
+                    backgroundColor: [
+                        '#2ecc71', '#2c3e50', '#2c3e50', '#2c3e50', '#2c3e50', 
+                        '#2c3e50', '#2c3e50', '#2c3e50', '#2c3e50', '#e74c3c'
+                    ],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // 3. Gráfico de Meses
+        const ctxMeses = document.getElementById('chartMeses').getContext('2d');
+        new Chart(ctxMeses, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                datasets: [{
+                    label: 'Faturamento (R$)',
+                    data: [30000, 40500, 28900, 33170, 53210, 38718, 35400, 36000, 23620, 44060, 34920, 40090],
+                    backgroundColor: [
+                        '#2c3e50', '#2c3e50', '#2c3e50', '#2c3e50', '#2ecc71', '#2c3e50', 
+                        '#2c3e50', '#2c3e50', '#e74c3c', '#2c3e50', '#2c3e50', '#2c3e50'
+                    ],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+</body>
+</html>
