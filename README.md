@@ -27,3 +27,5 @@ Analisar dados de vendas para identificar padrões de faturamento, perfil de cli
 
 ## ✅ Conclusão
 Os dados mostram que a empresa pode focar na faixa etária X e na categoria Y para aumentar o faturamento.
+
+LINK DO DASHBOARD: https://01gdev.github.io/Dashboard-vendas/
